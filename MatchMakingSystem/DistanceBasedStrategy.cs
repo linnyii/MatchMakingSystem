@@ -12,6 +12,21 @@ public class DistanceBasedStrategy : IMatchMakingStrategy
             .ToList();
     }
 
+    public void DisplayResults(Individual self, List<Individual> matchList)
+    {
+        Console.WriteLine("People around you from nearest to farest");
+        IndividualPrinter.PrintMatchList(matchList);
+        Console.WriteLine($"People who is around from nearest is {matchList[0].Id}");
+        IndividualPrinter.PrintIndividual(matchList[0]);
+        Console.WriteLine("Your personal Data");
+        IndividualPrinter.PrintIndividual(self);
+    }
+
+    public string GetDescription()
+    {
+        return "Distance Based Strategy";
+    }
+
     private double CalculateDistance(Coord coord1, Coord coord2)
     {
         double deltaX = coord2.X - coord1.X;

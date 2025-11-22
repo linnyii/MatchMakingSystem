@@ -5,4 +5,6 @@ namespace MatchMakingSystem;
 public interface IMatchMakingStrategy
 {
     public List<Individual> Match(Individual self, List<Individual> individuals);
+    public void DisplayResults(Individual self, List<Individual> matchList);
+    public string GetDescription();
 }

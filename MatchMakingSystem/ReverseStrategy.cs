@@ -5,29 +5,42 @@ namespace MatchMakingSystem;
 
 public class ReverseStrategy(IMatchMakingStrategy strategy) : IMatchMakingStrategy
 {
-    public IMatchMakingStrategy InnerStrategy { get; } = strategy ?? throw MatchMakingSystemException.NoStrategyFound();
+    private IMatchMakingStrategy InnerStrategy { get; } = strategy;
 
     public List<Individual> Match(Individual self, List<Individual> individuals)
     {
-        return InnerStrategy switch
+        var result = InnerStrategy.Match(self, individuals);
+        result.Reverse();
+        return result;
+    }
+
+    public void DisplayResults(Individual self, List<Individual> matchList)
+    {
+        switch (InnerStrategy)
         {
-            DistanceBasedStrategy => ReverseDistanceStrategy(self, individuals),
-            HabitBasedStrategy => ReverseHabitStrategy(self, individuals),
-            _ => throw MatchMakingSystemException.InvalidStrategy(InnerStrategy.GetType().ToString())
-        };
+            case DistanceBasedStrategy:
+                Console.WriteLine("People who are from the farest to the nearest ");
+                IndividualPrinter.PrintMatchList(matchList);
+                Console.WriteLine($"People who is away from the farest is {matchList[0].Id}");
+                IndividualPrinter.PrintIndividual(matchList[0]);
+                Console.WriteLine("Your personal Data");
+                IndividualPrinter.PrintIndividual(self);
+                break;
+            case HabitBasedStrategy:
+                Console.WriteLine("People who are with common habits with u. From the least to the most common");
+                IndividualPrinter.PrintMatchList(matchList);
+                Console.WriteLine($"People who is with the least common habits with u is {matchList[0].Id}");
+                IndividualPrinter.PrintIndividual(matchList[0]);
+                Console.WriteLine("Your personal Data");
+                IndividualPrinter.PrintIndividual(self);
+                break;
+            default:
+                throw MatchMakingSystemException.InvalidStrategy(InnerStrategy.GetType().ToString());
+        }
     }
 
-    private List<Individual> ReverseHabitStrategy(Individual self, List<Individual> individuals)
+    public string GetDescription()
     {
-        var result = InnerStrategy.Match(self, individuals);
-        result.Reverse();
-        return result;
-    }
-
-    private List<Individual> ReverseDistanceStrategy(Individual self, List<Individual> individuals)
-    {
-        var result = InnerStrategy.Match(self, individuals);
-        result.Reverse();
-        return result;
+        return $"Reverse {InnerStrategy.GetDescription()}";
     }
 }

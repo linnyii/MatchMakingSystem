@@ -9,7 +9,7 @@ public class MatchSystem(IMatchMakingStrategy strategy)
 
    public void Match()
    {
-      Console.WriteLine($"==================== {Strategy.GetDescription()} ====================");
+      Console.WriteLine($"===== {Strategy.GetDescription()} ====");
       var matchList = Strategy.Match(Self, Individuals);
       Strategy.DisplayResults(Self, matchList);
    }

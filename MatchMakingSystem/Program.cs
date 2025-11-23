@@ -12,13 +12,8 @@ return;
 // RunMatchMaking(new ReverseStrategy(new HabitBasedStrategy()), self, individuals);
 static void RunMatchMaking(IMatchMakingStrategy strategy, Individual self, List<Individual> individuals)
 {
-    var matchMakingSystem = new MatchSystem(strategy)
-    {
-        Self = self,    
-        Individuals = individuals
-    };
+    var matchMakingSystem = new MatchSystem(strategy, self, individuals);
     matchMakingSystem.Match();
-    Console.WriteLine("\n\n");
 }
 
 static (Individual self, List<Individual> individuals) CreateTestData()

@@ -1,11 +1,11 @@
 ﻿using MatchMakingSystem.Models;
 namespace MatchMakingSystem;
 
-public class MatchSystem(IMatchMakingStrategy strategy)
+public class MatchSystem(IMatchMakingStrategy strategy, Individual self, List<Individual> individuals )
 {
    private IMatchMakingStrategy Strategy { get; } = strategy;
-   public required Individual Self { get; init; }
-   public required List<Individual> Individuals { get; init; }
+   private Individual Self { get; } = self;
+   private List<Individual> Individuals { get; } = individuals;
 
    public void Match()
    {

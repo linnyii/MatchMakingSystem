@@ -45,7 +45,7 @@ static (Individual self, List<Individual> individuals) CreateTestData()
             Gender = Gender.Male,
             Age = 28,
             Intro = "Tech enthusiast and gamer",
-            Habits = new List<string> { "Gaming", "Coding", "Music" },
+            Habits = ["Gaming", "Coding", "Music"],
             Coord = new Coord(1, 1)
         },
         new()
